@@ -1,22 +1,30 @@
 let pokemonList = [
   {
     name: "Bulbasaur",
-    height: 7,
+    height: 0.7,
     types: ['grass', 'poison']
   },
   {
     name: "Pidgey",
-    height: 3,
+    height: 0.3,
     types: ['flying', 'dragon']
   },
   {
-    name: "Machop",
-    height: 8,
-    types: ['fighting', 'normal']
-  }
+    name: "Charmander",
+    height: 0.6,
+    types: ['fire', 'steel']
+  },
   {
     name: "Raichu",
-    height: 8,
+    height: 0.8,
     types: ['electric', 'normal']
   }
 ];
+
+for(let i = 0; i < pokemonList.length; i++){
+  if(pokemonList[i].height > 0.7){
+    document.write('<p>'+ pokemonList[i].name + " (height: " + pokemonList[i].height + ") - Wow, that's big!" + '<p>');
+  }else{
+  document.write('<p>' + pokemonList[i].name + " (height: " + pokemonList[i].height + ")" + '</p>' )
+ }
+}
