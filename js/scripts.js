@@ -21,10 +21,13 @@ let pokemonList = [
   }
 ];
 
+// used for loop to print pokemon name and height
+//used template literals `${}` for adding height
+
 for(let i = 0; i < pokemonList.length; i++){
   if(pokemonList[i].height > 0.7){
-    document.write('<p>'+ pokemonList[i].name + " (height: " + pokemonList[i].height + ") - Wow, that's big!" + '<p>');
+    document.write('<p>'+ pokemonList[i].name + ` (height: ${pokemonList[i].height}) - Wow, that's big!` + '<p>');
   }else{
-  document.write('<p>' + pokemonList[i].name + " (height: " + pokemonList[i].height + ")" + '</p>' )
+  document.write('<p>' + pokemonList[i].name + ` (height: ${pokemonList[i].height})` + '</p>' )
  }
 }
