@@ -1,26 +1,53 @@
-let pokemonList = [
-  {
-    name: "Bulbasaur",
-    height: 0.7,
-    types: ['grass', 'poison']
-  },
-  {
-    name: "Pidgey",
-    height: 0.3,
-    types: ['flying', 'dragon']
-  },
-  {
-    name: "Charmander",
-    height: 0.6,
-    types: ['fire', 'steel']
-  },
-  {
-    name: "Raichu",
-    height: 0.8,
-    types: ['electric', 'normal']
-  }
-];
+let pokemonRepository = (function (){
+  let pokemonList = [
+    {
+      name: "Bulbasaur",
+      height: 0.7,
+      types: ['grass', 'poison']
+    },
+    {
+      name: "Pidgey",
+      height: 0.3,
+      types: ['flying', 'dragon']
+    },
+    {
+      name: "Charmander",
+      height: 0.6,
+      types: ['fire', 'steel']
+    },
+    {
+      name: "Raichu",
+      height: 0.8,
+      types: ['electric', 'normal']
+    }
+  ];
 
+    function add (newItem){
+      pokemonList.push (newItem);
+    };
+    function getAll(){
+      return pokemonList;
+    };
+    return{
+      add: add,
+      getAll: getAll
+    }
+    document.write(pokemonList);
+})();
+// return {
+//     add: function(pokemon) {
+//       pokemonList.push(pokemon);
+//     },
+//     getAll: function() {
+//       return pokemonList;
+//     }
+//   };
+// })();
+
+pokemonRepository.getAll();
+pokemonRepository.add({name: "Nidoran",
+height: 0.4,
+types: ['poison', 'fighting']});
 // used for loop to print pokemon name and height
 //used template literals `${}` for adding height
 
@@ -31,10 +58,12 @@ let pokemonList = [
 //   document.write('<p>' + pokemonList[i].name + ` (height: ${pokemonList[i].height})` + '</p>' )
 //  }
 // }
-pokemonList.forEach(function(item){
-  if(item.height > 0.7){
-    document.write(`<p> ${item.name} (height: ${item.height}) - wow that's big </p>`);
-  }else{
-    document.write(`<p> ${item.name} (height: ${item.height}) </p>`);
-  }
-});
+// (function(){
+  pokemonRepository.getAll().forEach(function(item){
+    if(item.height > 0.7){
+      document.write(`<p> ${item.name} (height: ${item.height}) - wow that's big </p>`);
+    }else{
+      document.write(`<p> ${item.name} (height: ${item.height}) </p>`);
+    }
+  });
+// })();
