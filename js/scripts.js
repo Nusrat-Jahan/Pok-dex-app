@@ -22,48 +22,63 @@ let pokemonRepository = (function (){
     }
   ];
 
+    // function add (newItem){
+    //   pokemonList.push (newItem);
+    // };
+
+    //added new item in pokemonList and checked is it object or not. checked (name, height, types) are the key and newItem is not empty
     function add (newItem){
-      pokemonList.push (newItem);
+      if (typeof newItem === 'object' && newItem !== null && "name" in newItem && "height" in newItem && "types" in newItem){
+        pokemonList.push (newItem);
+       }else{
+         document.write('pokemon is not correct');
+      }
     };
+
+    // if clicked on the pokemon button, on the console it will log the clicked pokemon name
+    function showDetails(pokemon){
+      console.log(pokemon);
+    }
+
+    // Added a button for every pokemon
+    function addListItem(pokemon){
+      let addUlPokemon = document.querySelector('.pokemon-list');
+      let listItem = document.createElement('li');
+      let button = document.createElement('button');
+      button.innerText = pokemon.name;
+      button.classList.add('button-class');
+      listItem.appendChild(button);
+      addUlPokemon.appendChild(listItem);
+      button.addEventListener('click', function(event){
+        showDetails(pokemon)
+      })
+    }
+
+  // tried to use filter() function
+  // let filterName =  pokemonList.filter(function(pokemonName) {
+  //   return pokemonName.name == "Pidgey";
+  // });
+
     function getAll(){
       return pokemonList;
     };
-    return{
-      add: add,
-      getAll: getAll
-    }
-    document.write(pokemonList);
-})();
-// return {
-//     add: function(pokemon) {
-//       pokemonList.push(pokemon);
-//     },
-//     getAll: function() {
-//       return pokemonList;
-//     }
-//   };
-// })();
 
+    // all the function wrote on IIFE, should be on the return in this format
+    return {
+      add: add,
+      getAll: getAll,
+      addListItem: addListItem
+    }
+})();
+// document.write(pokemonRepository.filterName);
 pokemonRepository.getAll();
 pokemonRepository.add({name: "Nidoran",
 height: 0.4,
 types: ['poison', 'fighting']});
-// used for loop to print pokemon name and height
-//used template literals `${}` for adding height
 
-// for(let i = 0; i < pokemonList.length; i++){
-//   if(pokemonList[i].height > 0.7){
-//     document.write('<p>'+ pokemonList[i].name + ` (height: ${pokemonList[i].height}) - Wow, that's big!` + '<p>');
-//   }else{
-//   document.write('<p>' + pokemonList[i].name + ` (height: ${pokemonList[i].height})` + '</p>' )
-//  }
-// }
+//used template literals `${}` for adding height
 // (function(){
   pokemonRepository.getAll().forEach(function(item){
-    if(item.height > 0.7){
-      document.write(`<p> ${item.name} (height: ${item.height}) - wow that's big </p>`);
-    }else{
-      document.write(`<p> ${item.name} (height: ${item.height}) </p>`);
-    }
+    pokemonRepository.addListItem(item);
   });
 // })();
