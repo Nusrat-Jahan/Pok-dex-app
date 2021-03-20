@@ -1,7 +1,7 @@
 let pokemonRepository = (function (){
   let pokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=50';
-  let modalContainer = document.querySelector('#modal-container');
+  // let modalContainer = document.querySelector('#modal-container');
     // function add (newItem){
     //   pokemonList.push (newItem);
     // };
@@ -23,37 +23,66 @@ let pokemonRepository = (function (){
     function addListItem(pokemon) {
       let addUlPokemon = document.querySelector('.pokemon-list');
       let listItem = document.createElement('li');
+      listItem.classList.add('list-group-item');
       let button = document.createElement('button');
       button.innerText = pokemon.name;
+      button.classList.add('btn');
+      button.classList.add('btn-primary');
+      // button.classList.add('btn-block');
       button.classList.add('button-class');
+      button.setAttribute("data-target", "#exampleModal");
+      button.setAttribute("data-toggle", "modal");
       listItem.appendChild(button);
       addUlPokemon.appendChild(listItem);
       button.addEventListener('click', function(event) {
         showDetails(pokemon);
       });
     }
+    // show the modal content
+    function showModal(item){
+      let modalBody = $(".modal-body");
+      let modalTitle = $(".modal-title");
+      let modalHeader = $(".modal-header");
 
-  // tried to use filter() function
-  // let filterName =  pokemonList.filter(function(pokemonName) {
-  //   return pokemonName.name == "Pidgey";
-  // });
+      // Clear all existing modal content
+      modalTitle.empty();
+      modalBody.empty();
 
-  function loadList() {
-    return fetch(apiUrl).then(function (response){
-      return response.json();
-    }).then(function (json){
-      json.results.forEach(function (item){
-        let pokemon = {
-          name: cap(item.name),
-          detailsUrl: item.url
-        };
-        add(pokemon);
-        console.log(pokemon);
-      });
-    }).catch(function (e){
-      console.error(e);
-    })
-  }
+      // Create element for pokemon name in modal content
+      let nameElement = $("<h1>" + item.name + "<h1>");
+      // Create element for pokemon image in modal content
+      let imageElement = $('<img class="modal-img" style="width:50%">');
+      imageElement.attr("src", item.imageUrl);
+      // Create element for pokemon height in modal content
+      let heightElement = $("<p>" + "Height : " + item.height + "</p>");
+      // Create element for pokemon weight in modal content
+      let weightElement = $("<p>" + "Weight : " + item.weight + "</p>");
+      // Create element for type in modal content
+      let typesElement = $("<p>" + "Types : " + item.types + "</p>");
+
+      modalTitle.append(nameElement);
+      modalBody.append(imageElement);
+      modalBody.append(heightElement);
+      modalBody.append(weightElement);
+      modalBody.append(typesElement);
+    }
+
+    function loadList() {
+      return fetch(apiUrl).then(function (response){
+        return response.json();
+      }).then(function (json){
+        json.results.forEach(function (item){
+          let pokemon = {
+            name: cap(item.name),
+            detailsUrl: item.url
+          };
+          add(pokemon);
+          console.log(pokemon);
+        });
+      }).catch(function (e){
+        console.error(e);
+      })
+    }
 
   //Loads the list of 50 pokemon from pokeapi.
   function loadDetails(item) {
@@ -84,67 +113,7 @@ let pokemonRepository = (function (){
     function showDetails(item) {
       loadDetails(item).then(function () {
         console.log(item);
-        modalContainer.innerHTML = '';
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'X';
-        closeButtonElement.addEventListener('click', hideModal);
-
-        let pokemon_name = document.createElement('h1');
-        pokemon_name.classList.add('h1');
-        pokemon_name.innerHTML = cap(item.name);
-
-        let pokemon_height = document.createElement('h2');
-        pokemon_height.classList.add('h2');
-        pokemon_height.innerHTML = `Height: ${item.height}`;
-
-        let pokemon_weight = document.createElement('h3');
-        pokemon_weight.classList.add('h3');
-        pokemon_weight.innerHTML = `Weight: ${item.weight}`;
-
-        let pokemon_types = document.createElement('h3');
-        pokemon_types.classList.add('h3');
-        pokemon_types.innerHTML = 'Type: ' + (item.types);
-
-        let pokemon_img = document.createElement('img');
-        pokemon_img.classList.add('pokemon_img_call')
-        pokemon_img.src = item.imageUrl;
-        pokemon_img.alt = `image of ${item.name}`;
-
-        modal.appendChild(closeButtonElement);
-        modal.appendChild(pokemon_name);
-        modal.appendChild(pokemon_height);
-        modal.appendChild(pokemon_weight);
-        modal.appendChild(pokemon_types);
-        modal.appendChild(pokemon_img);
-        modalContainer.appendChild(modal);
-
-        modalContainer.classList.add('is-visible');
-
-        function hideModal(){
-          modalContainer.classList.remove('is-visible');
-        }
-
-        window.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-            hideModal();
-          }
-        });
-
-        modalContainer.addEventListener('click', (e) => {
-      // Since this is also triggered when clicking INSIDE the modal
-      // We only want to close if the user clicks directly outside the modal
-          let target = e.target;
-          if (target === modalContainer) {
-            hideModal();
-          }
-        });
-
-
-
+        showModal(item);
       });
     }
 
@@ -159,7 +128,8 @@ let pokemonRepository = (function (){
       addListItem: addListItem,
       loadList: loadList,
       loadDetails: loadDetails,
-      showDetails: showDetails
+      showDetails: showDetails,
+      showModal: showModal
     }
 })();
 
