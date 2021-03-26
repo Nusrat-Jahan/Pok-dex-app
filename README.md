@@ -20,4 +20,4 @@ In addition, JavaScript Performance is evaluated through network performance, co
 
 ## How To Run:
 
-To run this [PokeDex App](https://nusrat-jahan.github.io/Pok-dex-app/) you can use any modern web browser such as Google Chrome, Firefox, Microsoft Edge, opera etc.
+To run this [PokeDex App](https://nusrat-jahan.github.io/Pokedex-app/) you can use any modern web browser such as Google Chrome, Firefox, Microsoft Edge, opera etc.
